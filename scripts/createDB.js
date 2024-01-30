@@ -8,12 +8,18 @@ const createDB = (filename) => {
     }
   });
   db.exec(`
-  create table urls (
-    hero_id int primary key not null,
-    hero_name text not null,
-    is_xman text not null,
-    was_snapped text not null
-  )`);
+    create table urls (
+        id integer primary key autoincrement,
+        url text not null,
+        court_name text not null
+    );
+    create table code (
+        id integer primary key autoincrement,
+        url text not null,
+        code text,
+        title text
+    );
+  `);
 };
 
 module.exports = createDB;
