@@ -8,7 +8,7 @@ const getUrls = (dirDB, callback) => {
       if (err) {
         throw err;
       }
-      callback(rows.map((r) => r.url));
+      callback(rows);
     });
     db.close();
   } catch (e) {
