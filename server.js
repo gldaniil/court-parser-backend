@@ -6,13 +6,17 @@ const sqlite3 = require("sqlite3");
 require("dotenv").config();
 const iconv = require("iconv-lite"); // Декодер
 const express = require("express");
+const cors = require("cors");
 const createDB = require("./scripts/createDB");
 const setData = require("./scripts/setData");
 const getUrls = require("./scripts/getUrls");
 const setCourtData = require("./scripts/setCourtData");
 
 const app = express(),
-  port = 3010;
+  port = 4010;
+
+app.use(cors());
+
 const dirDB = "./data/" + process.env.DB_NAME;
 
 async function request(url) {
@@ -30,7 +34,6 @@ async function request(url) {
 
 const parsing = () => {
   getUrls(dirDB, (urlsTable) => {
-    console.log("Выполнение кода");
     urlsTable.forEach(async ({ id, url, court_name, last_changed }) => {
       const now = new Date().toLocaleDateString();
       const code = await request(url);
@@ -76,6 +79,11 @@ const parsing = () => {
     });
   });
 };
+
+// Запрос на получение списка судов
+app.get("/courts", (req, res) => {
+  res.send("Success!");
+});
 
 app.get("/", (req, res) => {
   res.send(`<h1>Test!</h1>`);
