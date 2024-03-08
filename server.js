@@ -11,6 +11,7 @@ const createDB = require("./scripts/createDB");
 const setData = require("./scripts/setData");
 const getUrls = require("./scripts/getUrls");
 const setCourtData = require("./scripts/setCourtData");
+const getCourts = require("./scripts/getCourts");
 
 const app = express(),
   port = 4010;
@@ -82,7 +83,7 @@ const parsing = () => {
 
 // Запрос на получение списка судов
 app.get("/courts", (req, res) => {
-  res.send("Success!");
+  getCourts(dirDB, res);
 });
 
 app.get("/", (req, res) => {
